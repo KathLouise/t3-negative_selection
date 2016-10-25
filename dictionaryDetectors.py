@@ -23,7 +23,6 @@ def saveWords(list):
 
 try:
     path = sys.argv[1]
-    print path
     list = []
     for filename in glob.glob(os.path.join(path, '*.txt')):
         with open(filename, "r") as fo:
