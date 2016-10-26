@@ -31,19 +31,17 @@ def generateDetectors(detector, maxDetector, path):
 def detectorSpam(detector, path, maxDetector):
     match = 0
     i = 0
-
     output = open('result.txt', 'w+')
- 
+
     for filename in glob.glob(os.path.join(path, '*.txt')):
         with open(filename, "r") as fo:
             for line in fo:
-                for word in line.split():            
-                    if(word == detector[i]):
+                for word in line.split(): 
+                    if word in detector:
                         match += 1
-        
-        #print fo.name
-        #print match                
-        if(match >= (maxDetector/2)):
+                        i += 1
+             
+        if(match >= 10):
             output.write("spam %s\n\n" % fo.name )
         else:
             output.write("half %s\n\n" % fo.name )

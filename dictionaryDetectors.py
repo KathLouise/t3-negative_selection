@@ -34,5 +34,5 @@ try:
         fo.close()
     print "Arquivo com os detectores gerados com sucesso"
 
-except:
-    print('Passe um diretorio')
+except Exception, e: 
+    print str(e)
