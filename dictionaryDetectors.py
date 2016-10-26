@@ -26,10 +26,10 @@ try:
     list = []
     for filename in glob.glob(os.path.join(path, '*.txt')):
         with open(filename, "r") as fo:
+            print fo.name
             for line in fo:
                 for word in line.split():
-                    if len(word) > 1:
-                        keepWords(word, list)
+                    keepWords(word, list)
             saveWords(list) 
         fo.close()
     print "Arquivo com os detectores gerados com sucesso"
