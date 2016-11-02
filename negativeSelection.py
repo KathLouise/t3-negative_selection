@@ -3,10 +3,22 @@ import glob
 import re
 import os
 import random
+from collections import Counter
 
 def searchAdd(detector, word):
     if word not in detector:
         detector.append(word)
+        
+def countNumberWords(file):
+    c = Counter()
+    with open(file, 'rb') as f:
+        for ln in f:
+            c.update(ln.split())
+            
+    f.close()
+
+    total = sum(c.values())
+    return total
  
 def generateDetectors(detector, maxDetector, path):
     count = 0
@@ -35,9 +47,12 @@ def generateDetectors(detector, maxDetector, path):
 def detectorSpam(detector, path, maxDetector):
     match = 0
     i = 0
+    totalWords = 0;
     output = open('resultnew.txt', 'w+')
+    spam = open('spam.txt', 'w+')
 
     for filename in glob.glob(os.path.join(path, '*.txt')):
+        totalWords = countNumberWords(filename)
         with open(filename, "r") as fo:
             for line in fo:
                 for word in line.split(): 
@@ -45,8 +60,8 @@ def detectorSpam(detector, path, maxDetector):
                         match += 1
                         i += 1
              
-        if(match >= 100):
-            output.write("spam %s\n\n" % fo.name )
+        if(match > (totalWords/2)):
+            spam.write("spam %s\n\n" % fo.name )
         else:
             output.write("half %s\n\n" % fo.name )
             
